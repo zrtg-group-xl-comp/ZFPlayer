@@ -27,7 +27,7 @@
 @implementation UIView (CustomControlView)
 
 - (void)setZfDelegate:(id<ZFPlayerControlViewDelagate>)delegate {
-    objc_setAssociatedObject(self, @selector(delegate), delegate, OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, @selector(zfDelegate), delegate, OBJC_ASSOCIATION_ASSIGN);
 }
 
 - (id<ZFPlayerControlViewDelagate>)zfDelegate {
