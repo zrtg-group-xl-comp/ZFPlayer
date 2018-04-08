@@ -1149,14 +1149,6 @@ typedef NS_ENUM(NSInteger, PanDirection){
                 // 给sumTime初值
                 CMTime time       = self.player.currentTime;
                 self.sumTime      = time.value/time.timescale;
-            } else if (x < y) { // 垂直移动
-                self.panDirection = PanDirectionVerticalMoved;
-                // 开始滑动的时候,状态改为正在控制音量
-                if (locationPoint.x > self.bounds.size.width / 2) {
-                    self.isVolume = YES;
-                }else { // 状态改为显示亮度调节
-                    self.isVolume = NO;
-                }
             }
             break;
         }
@@ -1164,10 +1156,6 @@ typedef NS_ENUM(NSInteger, PanDirection){
             switch (self.panDirection) {
                 case PanDirectionHorizontalMoved:{
                     [self horizontalMoved:veloctyPoint.x]; // 水平移动的方法只要x方向的值
-                    break;
-                }
-                case PanDirectionVerticalMoved:{
-                    [self verticalMoved:veloctyPoint.y]; // 垂直移动方法只要y方向的值
                     break;
                 }
                 default:
@@ -1184,11 +1172,6 @@ typedef NS_ENUM(NSInteger, PanDirection){
                     [self seekToTime:self.sumTime completionHandler:nil];
                     // 把sumTime滞空，不然会越加越多
                     self.sumTime = 0;
-                    break;
-                }
-                case PanDirectionVerticalMoved:{
-                    // 垂直移动结束后，把状态改为不再控制音量
-                    self.isVolume = NO;
                     break;
                 }
                 default:
