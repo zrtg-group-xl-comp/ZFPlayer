@@ -156,9 +156,9 @@
         // 移除屏幕移除player
         // _playerView.stopPlayWhileCellNotVisable = YES;
 
-        _playerView.forcePortrait = NO;
+        _playerView.forcePortrait = YES;
 
-        ZFPlayerShared.isLockScreen = YES;
+        ZFPlayerShared.isLockScreen = NO;
         ZFPlayerShared.isStatusBarHidden = NO;
     }
     return _playerView;

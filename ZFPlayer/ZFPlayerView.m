@@ -715,9 +715,10 @@ typedef NS_ENUM(NSInteger, PanDirection){
                 if (self.forcePortrait) {
                     make.width.equalTo(@(ScreenWidth));
                     make.center.equalTo([UIApplication sharedApplication].keyWindow);
-                    make.top.equalTo(@([self.class getNavBarTopHeight]));
+                    make.top.equalTo(@0);
                     make.bottom.equalTo(@0);
                 } else {
+                    // 竖着布局一次?
                     make.width.equalTo(@(ScreenHeight));
                     make.height.equalTo(@(ScreenWidth));
                     make.center.equalTo([UIApplication sharedApplication].keyWindow);
@@ -728,7 +729,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
     // iOS6.0之后,设置状态条的方法能使用的前提是shouldAutorotate为NO,也就是说这个视图控制器内,旋转要关掉;
     // 也就是说在实现这个方法的时候-(BOOL)shouldAutorotate返回值要为NO
     if (self.forcePortrait) {
-        [self changeStatusBackgroundColor:self.backgroundColor];
+        
     }
     else {
         [[UIApplication sharedApplication] setStatusBarOrientation:orientation animated:NO];
@@ -1030,12 +1031,17 @@ typedef NS_ENUM(NSInteger, PanDirection){
 - (void)_fullScreenAction {
     self.statusOriginBackgroundColor = [self getOriginStatusBackgroundColor];
     if (ZFPlayerShared.isLockScreen) {
-        [self unLockTheScreen];
+        // 调用AppDelegate单例记录播放状态是否锁屏
+        ZFPlayerShared.isLockScreen = NO;
+        [self.controlView zf_playerLockBtnState:NO];
+        self.isLocked = NO;
+        [self interfaceOrientation:UIInterfaceOrientationPortrait];
         return;
     }
     if (self.isFullScreen) {
         [self interfaceOrientation:UIInterfaceOrientationPortrait];
         self.isFullScreen = NO;
+        [[UIApplication sharedApplication] setStatusBarHidden:YES];
         return;
     } else {
         UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
@@ -1045,6 +1051,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
             [self interfaceOrientation:UIInterfaceOrientationLandscapeRight];
         }
         self.isFullScreen = YES;
+        [[UIApplication sharedApplication] setStatusBarHidden:NO];
     }
 }
 

@@ -368,17 +368,8 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 - (void)panRecognizer:(UIPanGestureRecognizer *)sender {}
 
 - (void)backBtnClick:(UIButton *)sender {
-    // 状态条的方向旋转的方向,来判断当前屏幕的方向
-    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-    // 在cell上并且是竖屏时候响应关闭事件
-    if (self.isCellVideo && orientation == UIInterfaceOrientationPortrait) {
-        if ([self.zfDelegate respondsToSelector:@selector(zf_controlView:closeAction:)]) {
-            [self.zfDelegate zf_controlView:self closeAction:sender];
-        }
-    } else {
-        if ([self.zfDelegate respondsToSelector:@selector(zf_controlView:backAction:)]) {
-            [self.zfDelegate zf_controlView:self backAction:sender];
-        }
+    if ([self.zfDelegate respondsToSelector:@selector(zf_controlView:fullScreenAction:)]) {
+        [self.zfDelegate zf_controlView:self fullScreenAction:sender];
     }
 }
 
@@ -406,6 +397,7 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 
 - (void)fullScreenBtnClick:(UIButton *)sender {
     sender.selected = !sender.selected;
+    self.fullScreen = sender.selected;
     if ([self.zfDelegate respondsToSelector:@selector(zf_controlView:fullScreenAction:)]) {
         [self.zfDelegate zf_controlView:self fullScreenAction:sender];
     }
@@ -515,7 +507,6 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
     if (self.isCellVideo) {
         self.shrink             = NO;
     }
-    self.fullScreen             = YES;
     self.backBtn.hidden = NO;
     self.fullScreenBtn.selected = self.isFullScreen;
     [self.backBtn setImage:ZFPlayerImage(@"ZFPlayer_back_full") forState:UIControlStateNormal];
@@ -529,9 +520,9 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
  *  设置竖屏的约束
  */
 - (void)setOrientationPortraitConstraint {
-    self.fullScreen             = NO;
-    self.fullScreenBtn.selected = self.isFullScreen;
-    self.backBtn.hidden = YES;
+    // 如果现在是小屏幕就不显示返回按钮,反之就显示
+    self.backBtn.hidden = !self.isFullScreen;
+
     [self.backBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.topImageView.mas_top).offset(3);
         make.leading.equalTo(self.topImageView.mas_leading).offset(10);
@@ -735,6 +726,9 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 - (IndicatorFlowerView *)activity {
     if (!_activity) {
         _activity = [[IndicatorFlowerView alloc] init];
+        _activity.backgroundColor = [UIColor blackColor];
+        _activity.clipsToBounds = YES;
+        _activity.layer.cornerRadius = 45 / 2;
     }
     return _activity;
 }
@@ -771,7 +765,7 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 - (UILabel *)shareLabel {
     if (!_shareLabel) {
         _shareLabel = [[UILabel alloc] init];
-        [_shareLabel setText:@"重播"];
+        [_shareLabel setText:@"分享"];
         [_shareLabel setTextColor:[UIColor whiteColor]];
         [_shareLabel setTextAlignment:NSTextAlignmentCenter];
         _shareLabel.font = [UIFont systemFontOfSize:14.0];
@@ -801,10 +795,13 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 
 - (UIButton *)failBtn {
     if (!_failBtn) {
-        _failBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+        _failBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_failBtn setTitle:@"重试" forState:UIControlStateNormal];
         [_failBtn setImage:ZFPlayerImage(@"ico_video_retry") forState:UIControlStateNormal];
         [_failBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [_failBtn setBackgroundColor:RGBA(89, 182, 215, 1)];
+        _failBtn.clipsToBounds = YES;
+        _failBtn.layer.cornerRadius = 4;
         _failBtn.titleLabel.font = [UIFont systemFontOfSize:12.0];
         _failBtn.backgroundColor = RGBA(0, 0, 0, 0.7);
         [_failBtn addTarget:self action:@selector(failBtnClick:) forControlEvents:UIControlEventTouchUpInside];

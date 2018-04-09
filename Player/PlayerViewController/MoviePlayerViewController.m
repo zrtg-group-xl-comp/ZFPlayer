@@ -171,7 +171,7 @@
         // 打开预览图
         _playerView.hasPreviewView = YES;
 
-//        _playerView.forcePortrait = YES;
+        _playerView.forcePortrait = YES;
         /// 默认全屏播放
 //        _playerView.fullScreenPlay = YES;
 
