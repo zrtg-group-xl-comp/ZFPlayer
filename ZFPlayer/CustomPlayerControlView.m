@@ -118,6 +118,10 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 
 @implementation CustomPlayerControlView
 
+- (BOOL)currentIsFullScreen {
+    return self.frame.size.height == ScreenHeight;
+}
+
 - (instancetype)init {
     self = [super init];
     if (self) {
@@ -368,6 +372,7 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 - (void)panRecognizer:(UIPanGestureRecognizer *)sender {}
 
 - (void)backBtnClick:(UIButton *)sender {
+    sender.hidden = YES;
     if ([self.zfDelegate respondsToSelector:@selector(zf_controlView:fullScreenAction:)]) {
         [self.zfDelegate zf_controlView:self fullScreenAction:sender];
     }
@@ -482,7 +487,13 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
     self.repeatBtn.hidden = NO;
     self.shareBtn.hidden = NO;
     self.repeatLabel.hidden = NO;
-    self.shareLabel.hidden = NO;
+    if ([self currentIsFullScreen] == YES) {
+        self.topImageView.hidden = NO;
+        self.backBtn.hidden = NO;
+    } else {
+        self.topImageView.hidden = YES;
+        self.backBtn.hidden = YES;
+    }
     // 初始化显示controlView为YES
     self.showing = NO;
     // 延迟隐藏controlView
@@ -494,7 +505,7 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
  */
 - (void)onDeviceOrientationChange {
     if (ZFPlayerShared.isLockScreen) { return; }
-    self.fullScreenBtn.selected = self.isFullScreen;
+    self.fullScreenBtn.selected = [self currentIsFullScreen];
     UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
     if (orientation == UIDeviceOrientationFaceUp || orientation == UIDeviceOrientationFaceDown || orientation == UIDeviceOrientationUnknown || orientation == UIDeviceOrientationPortraitUpsideDown) { return; }
     if (!self.isShrink && !self.isPlayEnd && !self.showing) {
@@ -508,7 +519,8 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
         self.shrink             = NO;
     }
     self.backBtn.hidden = NO;
-    self.fullScreenBtn.selected = self.isFullScreen;
+    self.topImageView.hidden = NO;
+    self.fullScreenBtn.selected = [self currentIsFullScreen];
     [self.backBtn setImage:ZFPlayerImage(@"ZFPlayer_back_full") forState:UIControlStateNormal];
     [self.backBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.topImageView.mas_top).offset(23);
@@ -521,7 +533,7 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
  */
 - (void)setOrientationPortraitConstraint {
     // 如果现在是小屏幕就不显示返回按钮,反之就显示
-    self.backBtn.hidden = !self.isFullScreen;
+    self.backBtn.hidden = ![self currentIsFullScreen];
 
     [self.backBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.topImageView.mas_top).offset(3);
@@ -557,7 +569,7 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
     // 隐藏resolutionView
     self.resolutionBtn.selected = YES;
     [self resolutionBtnClick:self.resolutionBtn];
-    if (self.isFullScreen && !self.playeEnd && !self.isShrink) {
+    if ([self currentIsFullScreen] && !self.playeEnd && !self.isShrink) {
         ZFPlayerShared.isStatusBarHidden = YES;
     }
 }
@@ -957,7 +969,7 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
  */
 - (void)zf_playerShowControlView {
     if ([self.zfDelegate respondsToSelector:@selector(zf_controlViewWillShow:isFullscreen:)]) {
-        [self.zfDelegate zf_controlViewWillShow:self isFullscreen:self.isFullScreen];
+        [self.zfDelegate zf_controlViewWillShow:self isFullscreen:[self currentIsFullScreen]];
     }
     [self zf_playerCancelAutoFadeOutControlView];
     [UIView animateWithDuration:ZFPlayerControlBarAutoFadeOutTimeInterval animations:^{
@@ -973,7 +985,7 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
  */
 - (void)zf_playerHideControlView {
     if ([self.zfDelegate respondsToSelector:@selector(zf_controlViewWillHidden:isFullscreen:)]) {
-        [self.zfDelegate zf_controlViewWillHidden:self isFullscreen:self.isFullScreen];
+        [self.zfDelegate zf_controlViewWillHidden:self isFullscreen:[self currentIsFullScreen]];
     }
     [self zf_playerCancelAutoFadeOutControlView];
     [UIView animateWithDuration:ZFPlayerControlBarAutoFadeOutTimeInterval animations:^{
@@ -1098,6 +1110,13 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
     self.shareLabel.hidden = NO;
     self.playeEnd         = YES;
     self.showing          = NO;
+    if ([self currentIsFullScreen] == YES) {
+        self.topImageView.hidden = NO;
+        self.backBtn.hidden = NO;
+    } else {
+        self.topImageView.hidden = YES;
+        self.backBtn.hidden = YES;
+    }
     // 隐藏controlView
     [self hideControlView];
     self.backgroundColor  = RGBA(0, 0, 0, .3);

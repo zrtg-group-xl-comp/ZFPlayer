@@ -127,4 +127,6 @@ typedef NS_ENUM(NSInteger, ZFPlayerState) {
  */
 - (void)pause;
 
+- (BOOL)currentInFullScreen;
+
 @end

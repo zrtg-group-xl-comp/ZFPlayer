@@ -122,6 +122,10 @@ typedef NS_ENUM(NSInteger, PanDirection){
 
 @implementation ZFPlayerView
 
+- (BOOL)currentInFullScreen {
+    return self.frame.size.height == ScreenHeight;
+}
+
 #pragma mark - life Cycle
 
 /**
@@ -421,7 +425,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
     self.doubleTap.delegate                = self;
     self.doubleTap.numberOfTouchesRequired = 1; //手指数
     self.doubleTap.numberOfTapsRequired    = 2;
-    [self addGestureRecognizer:self.doubleTap];
+//    [self addGestureRecognizer:self.doubleTap];
 
     // 解决点击当前view时候响应其他控件事件
     [self.singleTap setDelaysTouchesBegan:YES];
@@ -712,40 +716,40 @@ typedef NS_ENUM(NSInteger, PanDirection){
             [[UIApplication sharedApplication].keyWindow bringSubviewToFront:brightnessView];
             [[UIApplication sharedApplication].keyWindow insertSubview:self belowSubview:brightnessView];
             [self mas_remakeConstraints:^(MASConstraintMaker *make) {
-                if (self.forcePortrait) {
+//                if (self.forcePortrait) {
                     make.width.equalTo(@(ScreenWidth));
                     make.center.equalTo([UIApplication sharedApplication].keyWindow);
                     make.top.equalTo(@0);
-                    make.bottom.equalTo(@0);
-                } else {
-                    // 竖着布局一次?
-                    make.width.equalTo(@(ScreenHeight));
-                    make.height.equalTo(@(ScreenWidth));
-                    make.center.equalTo([UIApplication sharedApplication].keyWindow);
-                }
+                    make.height.equalTo(@(ScreenHeight));
+//                } else {
+//                    // 竖着布局一次?
+//                    make.width.equalTo(@(ScreenHeight));
+//                    make.height.equalTo(@(ScreenWidth));
+//                    make.center.equalTo([UIApplication sharedApplication].keyWindow);
+//                }
             }];
         }
     }
     // iOS6.0之后,设置状态条的方法能使用的前提是shouldAutorotate为NO,也就是说这个视图控制器内,旋转要关掉;
     // 也就是说在实现这个方法的时候-(BOOL)shouldAutorotate返回值要为NO
-    if (self.forcePortrait) {
-        
-    }
-    else {
-        [[UIApplication sharedApplication] setStatusBarOrientation:orientation animated:NO];
-    }
+//    if (self.forcePortrait) {
+//
+//    }
+//    else {
+//        [[UIApplication sharedApplication] setStatusBarOrientation:orientation animated:NO];
+//    }
 
-    // 获取旋转状态条需要的时间:
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.3];
-    // 更改了状态条的方向,但是设备方向UIInterfaceOrientation还是正方向的,这就要设置给你播放视频的视图的方向设置旋转
-    // 给你的播放视频的view视图设置旋转
-    self.transform = CGAffineTransformIdentity;
-    if (!self.forcePortrait) {
-        self.transform = [self getTransformRotationAngle];
-    }
-    // 开始旋转
-    [UIView commitAnimations];
+//     获取旋转状态条需要的时间:
+//    [UIView beginAnimations:nil context:nil];
+//    [UIView setAnimationDuration:0.3];
+//    // 更改了状态条的方向,但是设备方向UIInterfaceOrientation还是正方向的,这就要设置给你播放视频的视图的方向设置旋转
+//    // 给你的播放视频的view视图设置旋转
+//    self.transform = CGAffineTransformIdentity;
+//    if (!self.forcePortrait) {
+//        self.transform = [self getTransformRotationAngle];
+//    }
+//    // 开始旋转
+//    [UIView commitAnimations];
 }
 
 /**
@@ -895,10 +899,10 @@ typedef NS_ENUM(NSInteger, PanDirection){
 }
 
 - (void)changeStatusBackgroundColor:(UIColor *)color {
-    UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
-    if ([statusBar respondsToSelector:@selector(setBackgroundColor:)]) {
-        statusBar.backgroundColor = color;
-    }
+//    UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
+//    if ([statusBar respondsToSelector:@selector(setBackgroundColor:)]) {
+//        statusBar.backgroundColor = color;
+//    }
 }
 
 - (UIColor *)getOriginStatusBackgroundColor {
@@ -1029,7 +1033,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
 
 /** 全屏 */
 - (void)_fullScreenAction {
-    self.statusOriginBackgroundColor = [self getOriginStatusBackgroundColor];
+//    self.statusOriginBackgroundColor = [self getOriginStatusBackgroundColor];
     if (ZFPlayerShared.isLockScreen) {
         // 调用AppDelegate单例记录播放状态是否锁屏
         ZFPlayerShared.isLockScreen = NO;
@@ -1041,7 +1045,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
     if (self.isFullScreen) {
         [self interfaceOrientation:UIInterfaceOrientationPortrait];
         self.isFullScreen = NO;
-        [[UIApplication sharedApplication] setStatusBarHidden:YES];
+        [[UIApplication sharedApplication] setStatusBarHidden:NO];
         return;
     } else {
         UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
@@ -1051,7 +1055,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
             [self interfaceOrientation:UIInterfaceOrientationLandscapeRight];
         }
         self.isFullScreen = YES;
-        [[UIApplication sharedApplication] setStatusBarHidden:NO];
+        [[UIApplication sharedApplication] setStatusBarHidden:YES];
     }
 }
 
