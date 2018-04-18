@@ -282,7 +282,7 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
     
     [self.activity mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(self);
-        make.width.with.height.mas_equalTo(45);
+        make.width.with.height.mas_equalTo(40);
     }];
     
     [self.failBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -738,9 +738,9 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 - (IndicatorFlowerView *)activity {
     if (!_activity) {
         _activity = [[IndicatorFlowerView alloc] init];
-        _activity.backgroundColor = [UIColor blackColor];
+        _activity.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
         _activity.clipsToBounds = YES;
-        _activity.layer.cornerRadius = 45 / 2;
+        _activity.layer.cornerRadius = 40 / 2;
     }
     return _activity;
 }
