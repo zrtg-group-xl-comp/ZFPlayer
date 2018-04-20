@@ -26,7 +26,7 @@
         [images addObject:image];
     }
     self.animationImages = images;
-    self.animationDuration = images.count / 24.0;
+    self.animationDuration = images.count / 30.0;
     self.animationRepeatCount = 0;
     [self startAnimating];
 }
@@ -41,7 +41,7 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored"-Wdeprecated-declarations"
 
-static const CGFloat ZFPlayerAnimationTimeInterval             = 7.0f;
+static const CGFloat ZFPlayerAnimationTimeInterval             = 3.0f;
 static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 
 @interface CustomPlayerControlView () <UIGestureRecognizerDelegate>
@@ -872,6 +872,10 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
     if (!_placeholderImageView) {
         _placeholderImageView = [[UIImageView alloc] init];
         _placeholderImageView.userInteractionEnabled = YES;
+        _placeholderImageView.contentScaleFactor = UIScreen.mainScreen.scale;
+        _placeholderImageView.contentMode = UIViewContentModeScaleAspectFill;
+        _placeholderImageView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+        _placeholderImageView.clipsToBounds = YES;
     }
     return _placeholderImageView;
 }
@@ -927,6 +931,7 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
     self.shrink                 = NO;
     self.showing                = NO;
     self.playeEnd               = NO;
+    self.placeholderImageView.alpha  = 1;
 }
 
 /**
@@ -952,9 +957,11 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 
 /** 正在播放（隐藏placeholderImageView） */
 - (void)zf_playerItemPlaying {
-    [UIView animateWithDuration:1.0 animations:^{
-        self.placeholderImageView.alpha = 0;
-    }];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.placeholderImageView.alpha = 0;
+        });
+    });
 }
 
 - (void)zf_playerShowOrHideControlView {
