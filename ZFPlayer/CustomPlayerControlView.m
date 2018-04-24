@@ -31,7 +31,7 @@
         [images addObject:image];
     }
     self.animationImages = images;
-    self.animationDuration = images.count / 30.0;
+    self.animationDuration = images.count * 2 / 30.0;
     self.animationRepeatCount = 0;
     [self startAnimating];
 }
