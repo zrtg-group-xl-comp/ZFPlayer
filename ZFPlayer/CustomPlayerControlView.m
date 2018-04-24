@@ -21,7 +21,12 @@
     self.hidden = NO;
     NSMutableArray<UIImage *> *images = [[NSMutableArray alloc] init];
     for (NSInteger i = 0; i < 10; i++) {
-        NSString *string = [NSString stringWithFormat:@"default_white000%d", i];
+        NSString *string = [NSString stringWithFormat:@"default_white0%d", i];
+        UIImage *image = ZFPlayerImage(string);
+        [images addObject:image];
+    }
+    for (NSInteger i = 10; i < 20; i++) {
+        NSString *string = [NSString stringWithFormat:@"default_white%d", i];
         UIImage *image = ZFPlayerImage(string);
         [images addObject:image];
     }
