@@ -118,6 +118,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
 @property (nonatomic, strong) NSDictionary           *resolutionDic;
 
 @property (nonatomic, strong) UIColor                *statusOriginBackgroundColor;
+@property (nonatomic, strong) UIVisualEffectView *effectView;
 @end
 
 @implementation ZFPlayerView
@@ -150,6 +151,27 @@ typedef NS_ENUM(NSInteger, PanDirection){
  */
 - (void)initializeThePlayer {
     self.cellPlayerOnCenter = YES;
+}
+
+- (UIImageView *)placeholderBlurImageView {
+    if (_placeholderBlurImageView == nil) {
+        _placeholderBlurImageView = [[UIImageView alloc] init];
+        _placeholderBlurImageView.userInteractionEnabled = YES;
+        _placeholderBlurImageView.contentScaleFactor = UIScreen.mainScreen.scale;
+        _placeholderBlurImageView.contentMode = UIViewContentModeScaleAspectFill;
+        _placeholderBlurImageView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+        _placeholderBlurImageView.clipsToBounds = YES;
+    }
+    return _placeholderBlurImageView;
+}
+
+- (UIVisualEffectView *)effectView {
+    if (_effectView == nil) {
+        UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+        _effectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+        _effectView.alpha = 0.8f;
+    }
+    return _effectView;
 }
 
 - (void)dealloc {
@@ -207,6 +229,8 @@ typedef NS_ENUM(NSInteger, PanDirection){
 - (void)layoutSubviews {
     [super layoutSubviews];
     self.playerLayer.frame = self.bounds;
+    self.placeholderBlurImageView.frame = self.bounds;
+    self.effectView.frame = self.bounds;
 }
 
 #pragma mark - Public Method
@@ -286,6 +310,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
     [self pause];
     // 移除原来的layer
     [self.playerLayer removeFromSuperlayer];
+    [self.placeholderBlurImageView removeFromSuperview];
     // 把player置为nil
     self.imageGenerator = nil;
     self.player         = nil;
@@ -380,6 +405,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
     
     // 初始化playerLayer
     self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
+    [self.placeholderBlurImageView addSubview:self.effectView];
     
     self.backgroundColor = [UIColor blackColor];
     // 此处为默认视频填充模式
@@ -533,6 +559,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
                 [self layoutIfNeeded];
                 // 添加playerLayer到self.layer
                 [self.layer insertSublayer:self.playerLayer atIndex:0];
+                [self insertSubview:self.placeholderBlurImageView atIndex:0];
                 self.state = ZFPlayerStatePlaying;
                 // 加载完成后，再添加平移手势
                 if (!self.disablePanGesture) {
