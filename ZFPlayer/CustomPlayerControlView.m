@@ -235,13 +235,14 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
     }];
     
     [self.fullScreenBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.height.mas_equalTo(20);
-        make.trailing.equalTo(self.bottomImageView.mas_trailing).offset(-15);
+        make.height.mas_equalTo(40);
+        make.width.mas_equalTo(30);
+        make.trailing.equalTo(self.bottomImageView.mas_trailing);
         make.centerY.equalTo(self.bottomImageView);
     }];
 
     [self.totalTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.trailing.equalTo(self.fullScreenBtn.mas_leading).offset(-15);
+        make.trailing.equalTo(self.fullScreenBtn.mas_leading).offset(0);
         make.centerY.equalTo(self.bottomImageView);
         make.width.mas_equalTo(43);
     }];
