@@ -195,12 +195,12 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
     [self.topImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.trailing.equalTo(self);
         make.top.equalTo(self.mas_top).offset(0);
-        make.height.mas_equalTo(50);
+        make.height.mas_equalTo(iPhoneX ? 50 + 20 : 50);
     }];
     
     [self.backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.equalTo(self.topImageView.mas_leading).offset(10);
-        make.top.equalTo(self.topImageView.mas_top).offset(3);
+        make.top.equalTo(self.topImageView.mas_top).offset(iPhoneX ? 3 + 20 : 3);
         make.width.height.mas_equalTo(40);
     }];
     
@@ -219,7 +219,12 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
     }];
     
     [self.bottomImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.trailing.bottom.mas_equalTo(0);
+        if (self.fullScreen == YES) {
+            make.bottom.mas_equalTo(iPhoneX ? -34 : 0);
+        } else {
+            make.leading.trailing.bottom.mas_equalTo(0);
+        }
+        make.leading.trailing.mas_equalTo(0);
         make.height.mas_equalTo(50);
     }];
 
@@ -533,9 +538,19 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
     self.fullScreenBtn.selected = [self currentIsFullScreen];
     [self.backBtn setImage:ZFPlayerImage(@"ZFPlayer_back_full") forState:UIControlStateNormal];
     [self.backBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.topImageView.mas_top).offset(23);
+        make.top.equalTo(self.topImageView.mas_top).offset(iPhoneX ? 15 + 20 : 15);
         make.leading.equalTo(self.topImageView.mas_leading).offset(10);
         make.width.height.mas_equalTo(40);
+    }];
+
+    [self.bottomImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        if (self.fullScreen == YES) {
+            make.bottom.mas_equalTo(iPhoneX ? -34 : 0);
+        } else {
+            make.leading.trailing.bottom.mas_equalTo(0);
+        }
+        make.leading.trailing.mas_equalTo(0);
+        make.height.mas_equalTo(50);
     }];
 }
 /**
@@ -546,9 +561,19 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
     self.backBtn.hidden = ![self currentIsFullScreen];
     NSLog([NSString stringWithFormat:@"setOrientationPortraitConstraint %d", self.backBtn.isHidden]);
     [self.backBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.topImageView.mas_top).offset(3);
+        make.top.equalTo(self.topImageView.mas_top).offset(iPhoneX ? 15 + 20 : 15);
         make.leading.equalTo(self.topImageView.mas_leading).offset(10);
         make.width.height.mas_equalTo(40);
+    }];
+
+    [self.bottomImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        if (self.fullScreen == YES) {
+            make.bottom.mas_equalTo(iPhoneX ? -34 : 0);
+        } else {
+            make.leading.trailing.bottom.mas_equalTo(0);
+        }
+        make.leading.trailing.mas_equalTo(0);
+        make.height.mas_equalTo(50);
     }];
 }
 
