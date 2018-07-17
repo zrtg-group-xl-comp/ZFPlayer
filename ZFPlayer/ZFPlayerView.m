@@ -407,7 +407,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
     self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
     [self.placeholderBlurImageView addSubview:self.effectView];
     
-    self.backgroundColor = [UIColor blackColor];
+    self.backgroundColor = [UIColor clearColor];
     // 此处为默认视频填充模式
     self.playerLayer.videoGravity = self.videoGravity;
     
@@ -435,7 +435,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
     self.isPauseByUser = NO;
 }
 
-/**
+    /**
  *  创建手势
  */
 - (void)createGesture {
@@ -557,10 +557,10 @@ typedef NS_ENUM(NSInteger, PanDirection){
             if (self.player.currentItem.status == AVPlayerItemStatusReadyToPlay) {
                 [self setNeedsLayout];
                 [self layoutIfNeeded];
+                self.state = ZFPlayerStatePlaying;
                 // 添加playerLayer到self.layer
                 [self.layer insertSublayer:self.playerLayer atIndex:0];
                 [self insertSubview:self.placeholderBlurImageView atIndex:0];
-                self.state = ZFPlayerStatePlaying;
                 // 加载完成后，再添加平移手势
                 if (!self.disablePanGesture) {
                     // 添加平移手势，用来控制音量、亮度、快进快退
@@ -1073,6 +1073,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
         [self interfaceOrientation:UIInterfaceOrientationPortrait];
         self.isFullScreen = NO;
         [[UIApplication sharedApplication] setStatusBarHidden:NO];
+        self.placeholderBlurImageView.alpha = 0;
         return;
     } else {
         UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
@@ -1082,6 +1083,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
             [self interfaceOrientation:UIInterfaceOrientationLandscapeRight];
         }
         self.isFullScreen = YES;
+        self.placeholderBlurImageView.alpha = 1;
         [[UIApplication sharedApplication] setStatusBarHidden:YES];
     }
 }
@@ -1327,10 +1329,19 @@ typedef NS_ENUM(NSInteger, PanDirection){
 - (void)setState:(ZFPlayerState)state {
     _state = state;
     // 控制菊花显示、隐藏
-    [self.controlView zf_playerActivity:state == ZFPlayerStateBuffering];
-    if (state == ZFPlayerStatePlaying || state == ZFPlayerStateBuffering) {
+    [self.controlView zf_playerActivity: state == ZFPlayerStateBuffering];
+    // 处于播放状态
+    if (state == ZFPlayerStatePlaying) {
         // 隐藏占位图
         [self.controlView zf_playerItemPlaying];
+        // 如果全屏播放就加载高斯模糊的ImageView
+        // 不处理高斯模糊的背景图会导致页面有一个蒙层一闪而过
+        if (self.isFullScreen == NO) {
+            self.placeholderBlurImageView.alpha = 0;
+        } else {
+            // 否则隐藏
+            self.placeholderBlurImageView.alpha = 1;
+        }
     } else if (state == ZFPlayerStateFailed) {
         NSError *error = [self.playerItem error];
         [self.controlView zf_playerItemStatusFailed:error];
@@ -1584,6 +1595,8 @@ typedef NS_ENUM(NSInteger, PanDirection){
     } else {
         self.state = ZFPlayerStateBuffering;
     }
+    // 如果是重播直接隐藏占位图
+    [self.controlView zf_playerItemPlaying];
 }
 
 /** 加载失败按钮事件 */
