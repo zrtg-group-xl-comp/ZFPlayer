@@ -46,7 +46,7 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored"-Wdeprecated-declarations"
 
-static const CGFloat ZFPlayerAnimationTimeInterval             = 3.0f;
+static const CGFloat ZFPlayerAnimationTimeInterval             =  2.0f;
 static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 
 @interface CustomPlayerControlView () <UIGestureRecognizerDelegate>
@@ -969,11 +969,8 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 
 /** 正在播放（隐藏placeholderImageView） */
 - (void)zf_playerItemPlaying {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.placeholderImageView.alpha = 0;
-        });
-    });
+    NSLog(@"zf_playerItemPlaying");
+    self.placeholderImageView.alpha = 0;
 }
 
 - (void)zf_playerShowOrHideControlView {

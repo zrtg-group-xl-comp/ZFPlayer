@@ -930,9 +930,7 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 
 /** 正在播放（隐藏placeholderImageView） */
 - (void)zf_playerItemPlaying {
-    [UIView animateWithDuration:1.0 animations:^{
-        self.placeholderImageView.alpha = 0;
-    }];
+    self.placeholderImageView.alpha = 0;
 }
 
 - (void)zf_playerShowOrHideControlView {
