@@ -119,6 +119,9 @@ typedef NS_ENUM(NSInteger, PanDirection){
 
 @property (nonatomic, strong) UIColor                *statusOriginBackgroundColor;
 @property (nonatomic, strong) UIVisualEffectView *effectView;
+/// 原app是否隐藏状态栏
+@property (nonatomic) BOOL isAppStatusBarHidden;
+
 @end
 
 @implementation ZFPlayerView
@@ -150,6 +153,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
  *  初始化player
  */
 - (void)initializeThePlayer {
+    self.isAppStatusBarHidden = [UIApplication sharedApplication].isStatusBarHidden;
     self.cellPlayerOnCenter = YES;
 }
 
@@ -1072,7 +1076,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
     if (self.isFullScreen) {
         [self interfaceOrientation:UIInterfaceOrientationPortrait];
         self.isFullScreen = NO;
-        [[UIApplication sharedApplication] setStatusBarHidden:NO];
+        [[UIApplication sharedApplication] setStatusBarHidden: self.isAppStatusBarHidden];
         self.placeholderBlurImageView.alpha = 0;
         return;
     } else {
