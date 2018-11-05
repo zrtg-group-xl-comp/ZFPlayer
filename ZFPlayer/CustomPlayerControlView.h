@@ -10,5 +10,7 @@
 #import "ASValueTrackingSlider.h"
 
 @interface CustomPlayerControlView : UIView
+/// 进度条已经播放的颜色
+@property (strong, nonatomic) UIColor *minimumTrackTintColor;
 
 @end

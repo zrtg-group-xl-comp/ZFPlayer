@@ -649,6 +649,11 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
     ZFPlayerShared.isLandscape = fullScreen;
 }
 
+- (void)setMinimumTrackTintColor:(UIColor *)minimumTrackTintColor {
+    _minimumTrackTintColor = minimumTrackTintColor;
+    self.videoSlider.minimumTrackTintColor = minimumTrackTintColor;
+}
+
 #pragma mark - getter
 
 - (UIButton *)backBtn {
