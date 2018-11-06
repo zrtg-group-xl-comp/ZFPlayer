@@ -1005,8 +1005,10 @@ typedef NS_ENUM(NSInteger, PanDirection){
     if (gesture.state == UIGestureRecognizerStateRecognized) {
         if (self.isBottomVideo && !self.isFullScreen) { [self _fullScreenAction]; }
         else {
-            if (self.playDidEnd) { return; }
-            else {
+            /// 播放完毕或者加载失败就不显示进度条和播放按钮
+            if (self.playDidEnd || _state == ZFPlayerStateFailed) {
+                return;
+            } else {
                 [self.controlView zf_playerShowOrHideControlView];
             }
         }
