@@ -830,8 +830,8 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 - (UIButton *)downLoadBtn {
     if (!_downLoadBtn) {
         _downLoadBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_downLoadBtn setImage:ZFPlayerImage(@"ZFPlayer_download") forState:UIControlStateNormal];
-        [_downLoadBtn setImage:ZFPlayerImage(@"ZFPlayer_not_download") forState:UIControlStateDisabled];
+        [_downLoadBtn setImage:ZFPlayerImage(@"ico_video_download") forState:UIControlStateNormal];
+        [_downLoadBtn setImage:ZFPlayerImage(@"ico_video_download ") forState:UIControlStateDisabled];
         [_downLoadBtn addTarget:self action:@selector(downloadBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _downLoadBtn;

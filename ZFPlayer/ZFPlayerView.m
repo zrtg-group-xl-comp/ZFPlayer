@@ -1080,6 +1080,8 @@ typedef NS_ENUM(NSInteger, PanDirection){
         self.isFullScreen = NO;
         [[UIApplication sharedApplication] setStatusBarHidden: self.isAppStatusBarHidden];
         self.placeholderBlurImageView.alpha = 0;
+        /// 小窗口不显示下载
+        [self.controlView zf_playerHasDownloadFunction:NO];
         return;
     } else {
         UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
@@ -1090,6 +1092,8 @@ typedef NS_ENUM(NSInteger, PanDirection){
         }
         self.isFullScreen = YES;
         self.placeholderBlurImageView.alpha = 1;
+        /// 小窗口不显示下载
+        [self.controlView zf_playerHasDownloadFunction:self.hasDownload];
         [[UIApplication sharedApplication] setStatusBarHidden:YES];
     }
 }
