@@ -13,25 +13,34 @@
 #import <UIKit/UIKit.h>
 
 @interface IndicatorFlowerView: UIImageView
+
+@property (nonatomic, strong) NSArray *loadingImages;
+
 @end
 
 @implementation IndicatorFlowerView
 
 - (void)startAnimatingWhite {
     self.hidden = NO;
-    NSMutableArray<UIImage *> *images = [[NSMutableArray alloc] init];
-    for (NSInteger i = 0; i < 10; i++) {
-        NSString *string = [NSString stringWithFormat:@"default_white0%d", i];
-        UIImage *image = ZFPlayerImage(string);
-        [images addObject:image];
+    if (self.loadingImages.count == 0) {
+        NSMutableArray<UIImage *> *images = [[NSMutableArray alloc] init];
+        for (NSInteger i = 0; i < 10; i++) {
+            NSString *string = [NSString stringWithFormat:@"default_white0%d", i];
+            UIImage *image = ZFPlayerImage(string);
+            [images addObject:image];
+        }
+        for (NSInteger i = 10; i < 20; i++) {
+            NSString *string = [NSString stringWithFormat:@"default_white%d", i];
+            UIImage *image = ZFPlayerImage(string);
+            [images addObject:image];
+        }
+        self.animationImages = images;
+        self.animationDuration = images.count * 4 / 30.0;
+    } else {
+        self.animationImages = self.loadingImages;
+        self.animationDuration = self.loadingImages.count * 4 / 30.0;
     }
-    for (NSInteger i = 10; i < 20; i++) {
-        NSString *string = [NSString stringWithFormat:@"default_white%d", i];
-        UIImage *image = ZFPlayerImage(string);
-        [images addObject:image];
-    }
-    self.animationImages = images;
-    self.animationDuration = images.count * 4 / 30.0;
+
     self.animationRepeatCount = 0;
     [self startAnimating];
 }
@@ -339,6 +348,26 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
         [self setOrientationLandscapeConstraint];
     }
 }
+- (void)setHiddenFullScreenBtn:(BOOL)hiddenFullScreenBtn {
+    _hiddenFullScreenBtn = hiddenFullScreenBtn;
+    if (hiddenFullScreenBtn) {
+        _fullScreenBtn.hidden = YES;
+        [_fullScreenBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(0.01);
+            make.width.mas_equalTo(0.01);
+            make.trailing.equalTo(self.bottomImageView.mas_trailing);
+            make.centerY.equalTo(self.bottomImageView);
+        }];
+    } else {
+        _fullScreenBtn.hidden = NO;
+        [_fullScreenBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(40);
+            make.width.mas_equalTo(30);
+            make.trailing.equalTo(self.bottomImageView.mas_trailing);
+            make.centerY.equalTo(self.bottomImageView);
+        }];
+    }
+}
 
 #pragma mark - Action
 
@@ -425,8 +454,14 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 
 - (void)repeatBtnClick:(UIButton *)sender {
     // 重置控制层View
+    [self replayVideo: sender];
+}
+/// 重播
+- (void)replayVideo:(UIButton *)sender {
     [self zf_playerResetControlView];
-    [self zf_playerShowControlView];
+    if (self.hiddenReplayAndShareBtn == NO) {
+        [self zf_playerShowControlView];
+    }
     if ([self.zfDelegate respondsToSelector:@selector(zf_controlView:repeatPlayAction:)]) {
         [self.zfDelegate zf_controlView:self repeatPlayAction:sender];
     }
@@ -498,10 +533,19 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 }
 
 - (void)playerPlayDidEnd {
-    self.backgroundColor  = RGBA(0, 0, 0, .6);
-    self.repeatBtn.hidden = NO;
-    self.shareBtn.hidden = NO;
-    self.repeatLabel.hidden = NO;
+//    self.backgroundColor  = RGBA(0, 0, 0, .6);
+    if (self.hiddenReplayAndShareBtn) {
+        self.repeatBtn.hidden = YES;
+        self.shareBtn.hidden = YES;
+        self.repeatLabel.hidden = YES;
+        self.shareLabel.hidden = YES;
+    } else {
+        self.repeatBtn.hidden = NO;
+        self.shareBtn.hidden = NO;
+        self.repeatLabel.hidden = NO;
+        self.shareLabel.hidden = NO;
+    }
+
     if ([self currentIsFullScreen] == YES) {
         self.topImageView.hidden = NO;
         self.backBtn.hidden = NO;
@@ -588,7 +632,7 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
     } else {
         self.startBtn.alpha = 0;
     }
-    self.backgroundColor           = RGBA(0, 0, 0, 0.3);
+
     if (self.isCellVideo) {
         self.shrink                = NO;
     }
@@ -599,7 +643,6 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 
 - (void)hideControlView {
     self.showing = NO;
-    self.backgroundColor          = RGBA(0, 0, 0, 0);
     self.topImageView.alpha       = self.playeEnd;
     self.bottomImageView.alpha    = 0;
     self.startBtn.alpha = 0;
@@ -780,7 +823,7 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 - (IndicatorFlowerView *)activity {
     if (!_activity) {
         _activity = [[IndicatorFlowerView alloc] init];
-        _activity.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
+        _activity.backgroundColor = UIColor.clearColor;
         _activity.clipsToBounds = YES;
         _activity.layer.cornerRadius = 40 / 2;
     }
@@ -831,7 +874,7 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
     if (!_downLoadBtn) {
         _downLoadBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_downLoadBtn setImage:ZFPlayerImage(@"ico_video_download") forState:UIControlStateNormal];
-        [_downLoadBtn setImage:ZFPlayerImage(@"ico_video_download ") forState:UIControlStateDisabled];
+        [_downLoadBtn setImage:ZFPlayerImage(@"ico_video_download") forState:UIControlStateDisabled];
         [_downLoadBtn addTarget:self action:@selector(downloadBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _downLoadBtn;
@@ -987,11 +1030,11 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 - (void)zf_playerModel:(ZFPlayerModel *)playerModel {
 
     // 设置网络占位图片
-    if (playerModel.placeholderImageURLString) {
-        [self.placeholderImageView setImageWithURLString:playerModel.placeholderImageURLString placeholder:ZFPlayerImage(@"ZFPlayer_loading_bgView")];
-    } else {
-        self.placeholderImageView.image = playerModel.placeholderImage;
-    }
+//    if (playerModel.placeholderImageURLString) {
+//        [self.placeholderImageView setImageWithURLString:playerModel.placeholderImageURLString placeholder:ZFPlayerImage(@"ZFPlayer_loading_bgView")];
+//    } else {
+//        self.placeholderImageView.image = playerModel.placeholderImage;
+//    }
     if (playerModel.resolutionDic) {
         [self zf_playerResolutionArray:[playerModel.resolutionDic allKeys]];
     }
@@ -1038,7 +1081,12 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
         [self hideControlView];
     } completion:^(BOOL finished) {
         self.showing = NO;
+        [self didHiddenControlView];
     }];
+}
+/// 已经隐藏了控制层
+- (void)didHiddenControlView {
+    
 }
 
 /** 小屏播放 */
@@ -1150,10 +1198,18 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 
 /** 播放完了 */
 - (void)zf_playerPlayEnd {
-    self.repeatBtn.hidden = NO;
-    self.shareBtn.hidden = NO;
-    self.repeatLabel.hidden = NO;
-    self.shareLabel.hidden = NO;
+    if (self.hiddenReplayAndShareBtn) {
+        self.repeatBtn.hidden = YES;
+        self.shareBtn.hidden = YES;
+        self.repeatLabel.hidden = YES;
+        self.shareLabel.hidden = YES;
+    } else {
+        self.repeatBtn.hidden = NO;
+        self.shareBtn.hidden = NO;
+        self.repeatLabel.hidden = NO;
+        self.shareLabel.hidden = NO;
+    }
+
     self.playeEnd         = YES;
     self.showing          = NO;
     if ([self currentIsFullScreen] == YES) {
@@ -1166,7 +1222,7 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
     NSLog([NSString stringWithFormat:@"zf_playerPlayEnd - %d", self.backBtn.isHidden]);
     // 隐藏controlView
     [self hideControlView];
-    self.backgroundColor  = RGBA(0, 0, 0, .3);
+//    self.backgroundColor  = RGBA(0, 0, 0, .3);
     ZFPlayerShared.isStatusBarHidden = NO;
 }
 
@@ -1225,6 +1281,12 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 /** 下载按钮状态 */
 - (void)zf_playerDownloadBtnState:(BOOL)state {
     self.downLoadBtn.enabled = state;
+}
+
+/// 更新loading素材
+- (void)uploadLoadingImages:(NSArray*)images {
+    self.activity.animationImages = images;
+    self.activity.loadingImages = images;
 }
 
 #pragma clang diagnostic pop
