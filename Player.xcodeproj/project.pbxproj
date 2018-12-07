@@ -16,6 +16,39 @@
 		49CD65D11BF0C4EC0060DB9E /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49CD65D01BF0C4EC0060DB9E /* MediaPlayer.framework */; };
 		49F272801BF2330700FCC767 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49F2727F1BF2330700FCC767 /* Info.plist */; };
 		6DFFA86AB7DE7145F8B2FDBB /* libPods-Player.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15E3CE675A5AD72E88B7F01B /* libPods-Player.a */; };
+		88DC771921BA59DF006ECECC /* VIMediaCacheWorker.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC770321BA59DF006ECECC /* VIMediaCacheWorker.m */; };
+		88DC771A21BA59DF006ECECC /* VIMediaCacheWorker.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC770321BA59DF006ECECC /* VIMediaCacheWorker.m */; };
+		88DC771B21BA59DF006ECECC /* VIMediaCacheWorker.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC770321BA59DF006ECECC /* VIMediaCacheWorker.m */; };
+		88DC771C21BA59DF006ECECC /* VICacheConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC770821BA59DF006ECECC /* VICacheConfiguration.m */; };
+		88DC771D21BA59DF006ECECC /* VICacheConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC770821BA59DF006ECECC /* VICacheConfiguration.m */; };
+		88DC771E21BA59DF006ECECC /* VICacheConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC770821BA59DF006ECECC /* VICacheConfiguration.m */; };
+		88DC771F21BA59DF006ECECC /* VICacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC770921BA59DF006ECECC /* VICacheManager.m */; };
+		88DC772021BA59DF006ECECC /* VICacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC770921BA59DF006ECECC /* VICacheManager.m */; };
+		88DC772121BA59DF006ECECC /* VICacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC770921BA59DF006ECECC /* VICacheManager.m */; };
+		88DC772221BA59DF006ECECC /* VICacheAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC770A21BA59DF006ECECC /* VICacheAction.m */; };
+		88DC772321BA59DF006ECECC /* VICacheAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC770A21BA59DF006ECECC /* VICacheAction.m */; };
+		88DC772421BA59DF006ECECC /* VICacheAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC770A21BA59DF006ECECC /* VICacheAction.m */; };
+		88DC772521BA59DF006ECECC /* VICacheSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC770C21BA59DF006ECECC /* VICacheSessionManager.m */; };
+		88DC772621BA59DF006ECECC /* VICacheSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC770C21BA59DF006ECECC /* VICacheSessionManager.m */; };
+		88DC772721BA59DF006ECECC /* VICacheSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC770C21BA59DF006ECECC /* VICacheSessionManager.m */; };
+		88DC772821BA59DF006ECECC /* NSString+VIMD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC770D21BA59DF006ECECC /* NSString+VIMD5.m */; };
+		88DC772921BA59DF006ECECC /* NSString+VIMD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC770D21BA59DF006ECECC /* NSString+VIMD5.m */; };
+		88DC772A21BA59DF006ECECC /* NSString+VIMD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC770D21BA59DF006ECECC /* NSString+VIMD5.m */; };
+		88DC772B21BA59DF006ECECC /* VIContentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC770F21BA59DF006ECECC /* VIContentInfo.m */; };
+		88DC772C21BA59DF006ECECC /* VIContentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC770F21BA59DF006ECECC /* VIContentInfo.m */; };
+		88DC772D21BA59DF006ECECC /* VIContentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC770F21BA59DF006ECECC /* VIContentInfo.m */; };
+		88DC772E21BA59DF006ECECC /* VIResourceLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC771021BA59DF006ECECC /* VIResourceLoader.m */; };
+		88DC772F21BA59DF006ECECC /* VIResourceLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC771021BA59DF006ECECC /* VIResourceLoader.m */; };
+		88DC773021BA59DF006ECECC /* VIResourceLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC771021BA59DF006ECECC /* VIResourceLoader.m */; };
+		88DC773121BA59DF006ECECC /* VIMediaDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC771121BA59DF006ECECC /* VIMediaDownloader.m */; };
+		88DC773221BA59DF006ECECC /* VIMediaDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC771121BA59DF006ECECC /* VIMediaDownloader.m */; };
+		88DC773321BA59DF006ECECC /* VIMediaDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC771121BA59DF006ECECC /* VIMediaDownloader.m */; };
+		88DC773421BA59DF006ECECC /* VIResourceLoadingRequestWorker.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC771621BA59DF006ECECC /* VIResourceLoadingRequestWorker.m */; };
+		88DC773521BA59DF006ECECC /* VIResourceLoadingRequestWorker.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC771621BA59DF006ECECC /* VIResourceLoadingRequestWorker.m */; };
+		88DC773621BA59DF006ECECC /* VIResourceLoadingRequestWorker.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC771621BA59DF006ECECC /* VIResourceLoadingRequestWorker.m */; };
+		88DC773721BA59DF006ECECC /* VIResourceLoaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC771721BA59DF006ECECC /* VIResourceLoaderManager.m */; };
+		88DC773821BA59DF006ECECC /* VIResourceLoaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC771721BA59DF006ECECC /* VIResourceLoaderManager.m */; };
+		88DC773921BA59DF006ECECC /* VIResourceLoaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC771721BA59DF006ECECC /* VIResourceLoaderManager.m */; };
 		CC220D4A1DB7B504001191C7 /* MMMaterialDesignSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = CC220D491DB7B504001191C7 /* MMMaterialDesignSpinner.m */; };
 		CC2877CE1D9B60760097CEDA /* UIViewController+ZFPlayerRotation.m in Sources */ = {isa = PBXBuildFile; fileRef = CC2877CB1D9B60760097CEDA /* UIViewController+ZFPlayerRotation.m */; };
 		CC2CC63B1CA24D4B0028BBDD /* ZFBrightnessView.m in Sources */ = {isa = PBXBuildFile; fileRef = CC2CC6321CA24D4B0028BBDD /* ZFBrightnessView.m */; };
@@ -94,6 +127,29 @@
 		49CD65D01BF0C4EC0060DB9E /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		49F2727F1BF2330700FCC767 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5025702D2252268F74E00592 /* Pods-Player.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Player.release.xcconfig"; path = "Pods/Target Support Files/Pods-Player/Pods-Player.release.xcconfig"; sourceTree = "<group>"; };
+		88DC770021BA59DF006ECECC /* VIMediaCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMediaCache.h; sourceTree = "<group>"; };
+		88DC770221BA59DF006ECECC /* VICacheAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VICacheAction.h; sourceTree = "<group>"; };
+		88DC770321BA59DF006ECECC /* VIMediaCacheWorker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMediaCacheWorker.m; sourceTree = "<group>"; };
+		88DC770421BA59DF006ECECC /* VICacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VICacheManager.h; sourceTree = "<group>"; };
+		88DC770521BA59DF006ECECC /* VICacheConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VICacheConfiguration.h; sourceTree = "<group>"; };
+		88DC770621BA59DF006ECECC /* NSString+VIMD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+VIMD5.h"; sourceTree = "<group>"; };
+		88DC770721BA59DF006ECECC /* VICacheSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VICacheSessionManager.h; sourceTree = "<group>"; };
+		88DC770821BA59DF006ECECC /* VICacheConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VICacheConfiguration.m; sourceTree = "<group>"; };
+		88DC770921BA59DF006ECECC /* VICacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VICacheManager.m; sourceTree = "<group>"; };
+		88DC770A21BA59DF006ECECC /* VICacheAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VICacheAction.m; sourceTree = "<group>"; };
+		88DC770B21BA59DF006ECECC /* VIMediaCacheWorker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMediaCacheWorker.h; sourceTree = "<group>"; };
+		88DC770C21BA59DF006ECECC /* VICacheSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VICacheSessionManager.m; sourceTree = "<group>"; };
+		88DC770D21BA59DF006ECECC /* NSString+VIMD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+VIMD5.m"; sourceTree = "<group>"; };
+		88DC770F21BA59DF006ECECC /* VIContentInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIContentInfo.m; sourceTree = "<group>"; };
+		88DC771021BA59DF006ECECC /* VIResourceLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIResourceLoader.m; sourceTree = "<group>"; };
+		88DC771121BA59DF006ECECC /* VIMediaDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMediaDownloader.m; sourceTree = "<group>"; };
+		88DC771221BA59DF006ECECC /* VIResourceLoaderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIResourceLoaderManager.h; sourceTree = "<group>"; };
+		88DC771321BA59DF006ECECC /* VIResourceLoadingRequestWorker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIResourceLoadingRequestWorker.h; sourceTree = "<group>"; };
+		88DC771421BA59DF006ECECC /* VIResourceLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIResourceLoader.h; sourceTree = "<group>"; };
+		88DC771521BA59DF006ECECC /* VIContentInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIContentInfo.h; sourceTree = "<group>"; };
+		88DC771621BA59DF006ECECC /* VIResourceLoadingRequestWorker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIResourceLoadingRequestWorker.m; sourceTree = "<group>"; };
+		88DC771721BA59DF006ECECC /* VIResourceLoaderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIResourceLoaderManager.m; sourceTree = "<group>"; };
+		88DC771821BA59DF006ECECC /* VIMediaDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMediaDownloader.h; sourceTree = "<group>"; };
 		CC220D481DB7B504001191C7 /* MMMaterialDesignSpinner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMMaterialDesignSpinner.h; sourceTree = "<group>"; };
 		CC220D491DB7B504001191C7 /* MMMaterialDesignSpinner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMMaterialDesignSpinner.m; sourceTree = "<group>"; };
 		CC2877CA1D9B60760097CEDA /* UIViewController+ZFPlayerRotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+ZFPlayerRotation.h"; sourceTree = "<group>"; };
@@ -245,6 +301,52 @@
 			path = PlayerUITests;
 			sourceTree = "<group>";
 		};
+		88DC76FF21BA59DF006ECECC /* VIMediaCache */ = {
+			isa = PBXGroup;
+			children = (
+				88DC770021BA59DF006ECECC /* VIMediaCache.h */,
+				88DC770121BA59DF006ECECC /* Cache */,
+				88DC770E21BA59DF006ECECC /* ResourceLoader */,
+			);
+			path = VIMediaCache;
+			sourceTree = "<group>";
+		};
+		88DC770121BA59DF006ECECC /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				88DC770221BA59DF006ECECC /* VICacheAction.h */,
+				88DC770321BA59DF006ECECC /* VIMediaCacheWorker.m */,
+				88DC770421BA59DF006ECECC /* VICacheManager.h */,
+				88DC770521BA59DF006ECECC /* VICacheConfiguration.h */,
+				88DC770621BA59DF006ECECC /* NSString+VIMD5.h */,
+				88DC770721BA59DF006ECECC /* VICacheSessionManager.h */,
+				88DC770821BA59DF006ECECC /* VICacheConfiguration.m */,
+				88DC770921BA59DF006ECECC /* VICacheManager.m */,
+				88DC770A21BA59DF006ECECC /* VICacheAction.m */,
+				88DC770B21BA59DF006ECECC /* VIMediaCacheWorker.h */,
+				88DC770C21BA59DF006ECECC /* VICacheSessionManager.m */,
+				88DC770D21BA59DF006ECECC /* NSString+VIMD5.m */,
+			);
+			path = Cache;
+			sourceTree = "<group>";
+		};
+		88DC770E21BA59DF006ECECC /* ResourceLoader */ = {
+			isa = PBXGroup;
+			children = (
+				88DC770F21BA59DF006ECECC /* VIContentInfo.m */,
+				88DC771021BA59DF006ECECC /* VIResourceLoader.m */,
+				88DC771121BA59DF006ECECC /* VIMediaDownloader.m */,
+				88DC771221BA59DF006ECECC /* VIResourceLoaderManager.h */,
+				88DC771321BA59DF006ECECC /* VIResourceLoadingRequestWorker.h */,
+				88DC771421BA59DF006ECECC /* VIResourceLoader.h */,
+				88DC771521BA59DF006ECECC /* VIContentInfo.h */,
+				88DC771621BA59DF006ECECC /* VIResourceLoadingRequestWorker.m */,
+				88DC771721BA59DF006ECECC /* VIResourceLoaderManager.m */,
+				88DC771821BA59DF006ECECC /* VIMediaDownloader.h */,
+			);
+			path = ResourceLoader;
+			sourceTree = "<group>";
+		};
 		A89D51315C5CAFCAFF4E0FB8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -271,6 +373,7 @@
 		CC2CC6301CA24D4B0028BBDD /* ZFPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				88DC76FF21BA59DF006ECECC /* VIMediaCache */,
 				CC2877C51D9B60760097CEDA /* Category */,
 				CC2CC6331CA24D4B0028BBDD /* ZFPlayer.bundle */,
 				CC2CC6541CA38A710028BBDD /* ZFPlayer.h */,
@@ -585,21 +688,32 @@
 				CC725C2D1C894D2500C3EAF2 /* ZFVideoListViewController.m in Sources */,
 				CC6C7AE51C9BDFE90000AD58 /* MoviePlayerViewController.m in Sources */,
 				CC69BD1F1DD2DC1B00019AC6 /* UIImageView+ZFCache.m in Sources */,
+				88DC772E21BA59DF006ECECC /* VIResourceLoader.m in Sources */,
 				CC747D731E8268C100D917B7 /* ZFCollectionViewCell.m in Sources */,
+				88DC771C21BA59DF006ECECC /* VICacheConfiguration.m in Sources */,
+				88DC771921BA59DF006ECECC /* VIMediaCacheWorker.m in Sources */,
+				88DC772521BA59DF006ECECC /* VICacheSessionManager.m in Sources */,
 				4947F7921BE996AC003093C8 /* AppDelegate.m in Sources */,
 				CCE1C13B1C9AA11F004C95AC /* ZFVideoModel.m in Sources */,
+				88DC773421BA59DF006ECECC /* VIResourceLoadingRequestWorker.m in Sources */,
 				CC747D701E8267BB00D917B7 /* ZFCollectionViewController.m in Sources */,
+				88DC771F21BA59DF006ECECC /* VICacheManager.m in Sources */,
 				CCD7ECC61E72A1E500A9207F /* UINavigationController+ZFFullscreenPopGesture.m in Sources */,
 				CC725C321C894D2D00C3EAF2 /* ZFDownloadViewController.m in Sources */,
 				CC2CC63F1CA24D4B0028BBDD /* ZFPlayerView.m in Sources */,
 				CC2CC63B1CA24D4B0028BBDD /* ZFBrightnessView.m in Sources */,
+				88DC773121BA59DF006ECECC /* VIMediaDownloader.m in Sources */,
 				CC8693471CC9BF5E0037E71B /* ZFPVideoResolution.m in Sources */,
 				3647AE842079AE0600242930 /* CustomPlayerControlView.m in Sources */,
+				88DC773721BA59DF006ECECC /* VIResourceLoaderManager.m in Sources */,
+				88DC772B21BA59DF006ECECC /* VIContentInfo.m in Sources */,
 				CC7D5E951D59AAAC000AC18A /* ASValueTrackingSlider.m in Sources */,
 				CC2CC63D1CA24D4B0028BBDD /* ZFPlayerControlView.m in Sources */,
+				88DC772821BA59DF006ECECC /* NSString+VIMD5.m in Sources */,
 				CC220D4A1DB7B504001191C7 /* MMMaterialDesignSpinner.m in Sources */,
 				CCEF1BF91CACB28E00B0DD78 /* ZFDownloadedCell.m in Sources */,
 				CC6FF40D1DB9DFB300222AAC /* ZFPlayerModel.m in Sources */,
+				88DC772221BA59DF006ECECC /* VICacheAction.m in Sources */,
 				CCE1C13E1C9AA128004C95AC /* ZFTableViewController.m in Sources */,
 				CC6FF3681DB4A32E00222AAC /* UIView+CustomControlView.m in Sources */,
 				CCEF1BF41CAA826900B0DD78 /* ZFDownloadingCell.m in Sources */,
@@ -615,6 +729,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88DC772C21BA59DF006ECECC /* VIContentInfo.m in Sources */,
+				88DC772621BA59DF006ECECC /* VICacheSessionManager.m in Sources */,
+				88DC771A21BA59DF006ECECC /* VIMediaCacheWorker.m in Sources */,
+				88DC772321BA59DF006ECECC /* VICacheAction.m in Sources */,
+				88DC772021BA59DF006ECECC /* VICacheManager.m in Sources */,
+				88DC772921BA59DF006ECECC /* NSString+VIMD5.m in Sources */,
+				88DC773221BA59DF006ECECC /* VIMediaDownloader.m in Sources */,
+				88DC773521BA59DF006ECECC /* VIResourceLoadingRequestWorker.m in Sources */,
+				88DC771D21BA59DF006ECECC /* VICacheConfiguration.m in Sources */,
+				88DC773821BA59DF006ECECC /* VIResourceLoaderManager.m in Sources */,
+				88DC772F21BA59DF006ECECC /* VIResourceLoader.m in Sources */,
 				4947F7A81BE996AC003093C8 /* PlayerTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -623,6 +748,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88DC772D21BA59DF006ECECC /* VIContentInfo.m in Sources */,
+				88DC772721BA59DF006ECECC /* VICacheSessionManager.m in Sources */,
+				88DC771B21BA59DF006ECECC /* VIMediaCacheWorker.m in Sources */,
+				88DC772421BA59DF006ECECC /* VICacheAction.m in Sources */,
+				88DC772121BA59DF006ECECC /* VICacheManager.m in Sources */,
+				88DC772A21BA59DF006ECECC /* NSString+VIMD5.m in Sources */,
+				88DC773321BA59DF006ECECC /* VIMediaDownloader.m in Sources */,
+				88DC773621BA59DF006ECECC /* VIResourceLoadingRequestWorker.m in Sources */,
+				88DC771E21BA59DF006ECECC /* VICacheConfiguration.m in Sources */,
+				88DC773921BA59DF006ECECC /* VIResourceLoaderManager.m in Sources */,
+				88DC773021BA59DF006ECECC /* VIResourceLoader.m in Sources */,
 				4947F7B31BE996AC003093C8 /* PlayerUITests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -26,6 +26,11 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "UIView+CustomControlView.h"
 #import "ZFPlayer.h"
+#import "VIResourceLoaderManager.h"
+#import "VICacheManager.h"
+
+/// 超过500MB视频缓存默认清理一次[默认初始化会检测一次缓存]
+#define maxVideoCacheSizeMb 500
 
 #define CellPlayerFatherViewTag  200
 
@@ -121,7 +126,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
 @property (nonatomic, strong) UIVisualEffectView *effectView;
 /// 原app是否隐藏状态栏
 @property (nonatomic) BOOL isAppStatusBarHidden;
-
+@property (nonatomic, strong) VIResourceLoaderManager *resourceLoaderManager;
 @end
 
 @implementation ZFPlayerView
@@ -155,6 +160,12 @@ typedef NS_ENUM(NSInteger, PanDirection){
 - (void)initializeThePlayer {
     self.isAppStatusBarHidden = [UIApplication sharedApplication].isStatusBarHidden;
     self.cellPlayerOnCenter = YES;
+    /// 超过视频缓存默认清理一次
+    NSInteger videoCacheSize = [VICacheManager calculateCachedSizeWithError:nil] / 1024 / 1024;
+    if (videoCacheSize > maxVideoCacheSizeMb) {
+        [VICacheManager cleanAllCacheWithError:nil];
+    }
+    self.resourceLoaderManager = [VIResourceLoaderManager new];
 }
 
 - (UIImageView *)placeholderBlurImageView {
@@ -403,7 +414,10 @@ typedef NS_ENUM(NSInteger, PanDirection){
 - (void)configZFPlayer {
     self.urlAsset = [AVURLAsset assetWithURL:self.videoURL];
     // 初始化playerItem
-    self.playerItem = [AVPlayerItem playerItemWithAsset:self.urlAsset];
+//    self.playerItem = [AVPlayerItem playerItemWithAsset:self.urlAsset];
+    /// 默认支持视频缓存代理
+    AVPlayerItem *playerItem = [self.resourceLoaderManager playerItemWithURL:self.videoURL];
+    self.playerItem = playerItem;
     // 每次都重新创建Player，替换replaceCurrentItemWithPlayerItem:，该方法阻塞线程
     self.player = [AVPlayer playerWithPlayerItem:self.playerItem];
     
