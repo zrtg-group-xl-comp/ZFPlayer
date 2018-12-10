@@ -130,5 +130,7 @@ typedef NS_ENUM(NSInteger, ZFPlayerState) {
 - (void)pause;
 
 - (BOOL)currentInFullScreen;
+/// 重播
+- (void)replayVideo:(void (^)(BOOL finished))completionHandler;
 
 @end
