@@ -16,6 +16,8 @@
 @property (nonatomic, assign) BOOL hiddenReplayAndShareBtn;
 /// 是否隐藏全屏按钮, 默认显示
 @property (nonatomic, assign) BOOL hiddenFullScreenBtn;
+/// 是否隐藏返回按钮, 默认全屏下显示
+@property (nonatomic, assign) BOOL hiddenBackBtn;
 
 /// [回调] 播放完毕
 - (void)zf_playerPlayEnd;
@@ -35,6 +37,6 @@
 /// 隐藏顶部阴影
 - (void)setTopMaskLayerImage:(UIImage*) image;
 /// 隐藏底部阴影
-- (void)setBottomMaskLayerImage:(UIImage*) image;
+- (void)setBottomMaskLayerImage:(UIImage*) image
 
 @end
