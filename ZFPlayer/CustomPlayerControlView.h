@@ -32,5 +32,9 @@
 
 /// 更新loading素材
 - (void)uploadLoadingImages:(NSArray*)images;
+/// 隐藏顶部阴影
+- (void)setTopMaskLayerImage:(UIImage*) image;
+/// 隐藏底部阴影
+- (void)setBottomMaskLayerImage:(UIImage*) image;
 
 @end
