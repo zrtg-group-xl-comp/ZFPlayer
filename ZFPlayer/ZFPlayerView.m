@@ -1735,5 +1735,29 @@ typedef NS_ENUM(NSInteger, PanDirection){
 }
 
 #pragma clang diagnostic pop
+#pragma mark - Custom
+/// 重播
+- (void)replayVideo:(void (^)(BOOL finished))completionHandler {
+    if (self.player.currentItem.status == AVPlayerItemStatusReadyToPlay) {
+        // seekTime:completionHandler:不能精确定位
+        // 如果需要精确定位，可以使用seekToTime:toleranceBefore:toleranceAfter:completionHandler:
+        // 转换成CMTime才能给player来控制播放进度
+        [self.player pause];
+        CMTime dragedCMTime = CMTimeMake(0, 1); //kCMTimeZero
+        __weak typeof(self) weakSelf = self;
+        [self.player seekToTime:dragedCMTime toleranceBefore:CMTimeMake(1,1) toleranceAfter:CMTimeMake(1,1) completionHandler:^(BOOL finished) {
+            // 视频跳转回调
+            if (completionHandler) { completionHandler(finished); }
+            [weakSelf.player play];
+            weakSelf.seekTime = 0;
+            weakSelf.isDragged = NO;
+            // 结束滑动
+            [weakSelf.controlView zf_playerDraggedEnd];
+            if (!weakSelf.playerItem.isPlaybackLikelyToKeepUp && !weakSelf.isLocalVideo) { weakSelf.state = ZFPlayerStateBuffering; }
+        }];
+    } else {
+        NSLog(@"\n\n视频还不能播放,不能重新播放\n\n");
+    }
+}
 
 @end

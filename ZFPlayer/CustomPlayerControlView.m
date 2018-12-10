@@ -1288,7 +1288,14 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
     self.activity.animationImages = images;
     self.activity.loadingImages = images;
 }
-
+/// 隐藏顶部阴影
+- (void)setTopMaskLayerImage:(UIImage*) image {
+    self.topImageView.image = image;
+}
+/// 隐藏底部阴影
+- (void)setBottomMaskLayerImage:(UIImage*) image {
+    self.bottomImageView.image = image;
+}
 #pragma clang diagnostic pop
 
 @end
