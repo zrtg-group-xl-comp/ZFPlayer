@@ -368,7 +368,11 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
         }];
     }
 }
-
+/// 强制隐藏返回按钮,默认自动显示和隐藏
+- (void)setHiddenBackBtn:(BOOL)hiddenBackBtn {
+    _hiddenBackBtn = hiddenBackBtn;
+    _backBtn.hidden = hiddenBackBtn;
+}
 #pragma mark - Action
 
 /**
@@ -449,6 +453,9 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
     self.topImageView.hidden = !self.fullScreen;
     if ([self.zfDelegate respondsToSelector:@selector(zf_controlView:fullScreenAction:)]) {
         [self.zfDelegate zf_controlView:self fullScreenAction:sender];
+    }
+    if (self.hiddenBackBtn) {
+        self.backBtn.hidden = YES;
     }
 }
 
@@ -553,6 +560,9 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
         self.topImageView.hidden = YES;
         self.backBtn.hidden = YES;
     }
+    if (self.hiddenBackBtn) {
+        self.backBtn.hidden = YES;
+    }
     // 初始化显示controlView为YES
     self.showing = NO;
     // 延迟隐藏controlView
@@ -578,6 +588,9 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
         self.shrink             = NO;
     }
     self.backBtn.hidden = NO;
+    if (self.hiddenBackBtn) {
+        self.backBtn.hidden = YES;
+    }
     self.topImageView.hidden = NO;
     self.fullScreenBtn.selected = [self currentIsFullScreen];
     [self.backBtn setImage:ZFPlayerImage(@"ZFPlayer_back_full") forState:UIControlStateNormal];
@@ -603,6 +616,9 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 - (void)setOrientationPortraitConstraint {
     // 如果现在是小屏幕就不显示返回按钮,反之就显示
     self.backBtn.hidden = ![self currentIsFullScreen];
+    if (self.hiddenBackBtn) {
+        self.backBtn.hidden = YES;
+    }
     NSLog([NSString stringWithFormat:@"setOrientationPortraitConstraint %d", self.backBtn.isHidden]);
     [self.backBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.topImageView.mas_top).offset(iPhoneX ? 15 + 20 : 15);
@@ -639,6 +655,9 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
     ZFPlayerShared.isStatusBarHidden = NO;
     self.topImageView.hidden = !self.fullScreen;
     self.backBtn.hidden = !self.fullScreen;
+    if (self.hiddenBackBtn) {
+        self.backBtn.hidden = YES;
+    }
 }
 
 - (void)hideControlView {
@@ -1217,6 +1236,9 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
         self.backBtn.hidden = NO;
     } else {
         self.topImageView.hidden = YES;
+        self.backBtn.hidden = YES;
+    }
+    if (self.hiddenBackBtn) {
         self.backBtn.hidden = YES;
     }
     NSLog([NSString stringWithFormat:@"zf_playerPlayEnd - %d", self.backBtn.isHidden]);
