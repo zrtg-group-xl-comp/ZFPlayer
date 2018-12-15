@@ -99,7 +99,11 @@ static NSString *kCacheScheme = @"__VIMediaCache___:";
     if (!url) {
         return nil;
     }
-
+    /// ST: 本地文件直接播放,不走缓存代理
+    /// 否则会下载失败,导致播放失败
+    if ([url.scheme isEqualToString:@"file"]) {
+        return url;
+    }
     NSURL *assetURL = [NSURL URLWithString:[kCacheScheme stringByAppendingString:[url absoluteString]]];
     return assetURL;
 }
