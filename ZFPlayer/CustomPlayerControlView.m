@@ -427,7 +427,9 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 - (void)lockScrrenBtnClick:(UIButton *)sender {
     sender.selected = !sender.selected;
     self.showing = NO;
-    [self zf_playerShowControlView];
+    if (self.alwaysHiddenControlUI == false) {
+        [self zf_playerShowControlView];
+    }
     if ([self.zfDelegate respondsToSelector:@selector(zf_controlView:lockScreenAction:)]) {
         [self.zfDelegate zf_controlView:self lockScreenAction:sender];
     }
@@ -466,7 +468,7 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 /// 重播
 - (void)replayVideo:(UIButton *)sender {
     [self zf_playerResetControlView];
-    if (self.hiddenReplayAndShareBtn == NO) {
+    if (self.hiddenReplayAndShareBtn == NO && self.alwaysHiddenControlUI == NO ) {
         [self zf_playerShowControlView];
     }
     if ([self.zfDelegate respondsToSelector:@selector(zf_controlView:repeatPlayAction:)]) {
@@ -536,7 +538,11 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
  *  应用进入前台
  */
 - (void)appDidEnterPlayground {
-    if (!self.isShrink) { [self zf_playerShowControlView]; }
+    if (!self.isShrink) {
+        if (self.alwaysHiddenControlUI == false) {
+            [self zf_playerShowControlView];
+        }
+    }
 }
 
 - (void)playerPlayDidEnd {
@@ -566,7 +572,9 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
     // 初始化显示controlView为YES
     self.showing = NO;
     // 延迟隐藏controlView
-    [self zf_playerShowControlView];
+    if (self.alwaysHiddenControlUI == false) {
+        [self zf_playerShowControlView];
+    }
 }
 
 /**
@@ -1069,7 +1077,9 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
     if (self.isShowing) {
         [self zf_playerHideControlView];
     } else {
-        [self zf_playerShowControlView];
+        if (self.alwaysHiddenControlUI == false) {
+            [self zf_playerShowControlView];
+        }
     }
 }
 /**
@@ -1080,12 +1090,13 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
         [self.zfDelegate zf_controlViewWillShow:self isFullscreen:[self currentIsFullScreen]];
     }
     [self zf_playerCancelAutoFadeOutControlView];
-    [UIView animateWithDuration:ZFPlayerControlBarAutoFadeOutTimeInterval animations:^{
-        [self showControlView];
-    } completion:^(BOOL finished) {
-        self.showing = YES;
-        [self autoFadeOutControlView];
-    }];
+    [self showControlView];
+    self.showing = YES;
+    [self autoFadeOutControlView];
+//    [UIView animateWithDuration:ZFPlayerControlBarAutoFadeOutTimeInterval animations:^{
+//    } completion:^(BOOL finished) {
+//
+//    }];
 }
 
 /**
@@ -1096,12 +1107,14 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
         [self.zfDelegate zf_controlViewWillHidden:self isFullscreen:[self currentIsFullScreen]];
     }
     [self zf_playerCancelAutoFadeOutControlView];
-    [UIView animateWithDuration:ZFPlayerControlBarAutoFadeOutTimeInterval animations:^{
-        [self hideControlView];
-    } completion:^(BOOL finished) {
-        self.showing = NO;
-        [self didHiddenControlView];
-    }];
+    [self hideControlView];
+    self.showing = NO;
+    [self didHiddenControlView];
+    
+//    [UIView animateWithDuration:ZFPlayerControlBarAutoFadeOutTimeInterval animations:^{
+//    } completion:^(BOOL finished) {
+//
+//    }];
 }
 /// 已经隐藏了控制层
 - (void)didHiddenControlView {

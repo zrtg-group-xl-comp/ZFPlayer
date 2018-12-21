@@ -18,6 +18,8 @@
 @property (nonatomic, assign) BOOL hiddenFullScreenBtn;
 /// 是否隐藏返回按钮, 默认全屏下显示
 @property (nonatomic, assign) BOOL hiddenBackBtn;
+/// 是否总是隐藏控制层(默认自动隐藏和显示) [隐藏控制层UI,只接收相关代理回调]
+@property (nonatomic) BOOL alwaysHiddenControlUI;
 
 /// [回调] 播放完毕
 - (void)zf_playerPlayEnd;
