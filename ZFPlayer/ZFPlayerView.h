@@ -132,5 +132,6 @@ typedef NS_ENUM(NSInteger, ZFPlayerState) {
 - (BOOL)currentInFullScreen;
 /// 重播
 - (void)replayVideo:(void (^)(BOOL finished))completionHandler;
-
+/// iPhoneX系列机型判断
++ (BOOL)zf_isIPhoneX;
 @end

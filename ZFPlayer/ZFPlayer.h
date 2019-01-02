@@ -22,7 +22,7 @@
 // THE SOFTWARE.
 
 #define iPhone4s ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 960), [[UIScreen mainScreen] currentMode].size) : NO)
-#define iPhoneX ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)
+#define iPhoneX ([ZFPlayerView zf_isIPhoneX])
 
 // 监听TableView的contentOffset
 #define kZFPlayerViewContentOffset          @"contentOffset"
