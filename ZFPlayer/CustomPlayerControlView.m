@@ -850,7 +850,7 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 - (IndicatorFlowerView *)activity {
     if (!_activity) {
         _activity = [[IndicatorFlowerView alloc] init];
-        _activity.backgroundColor = UIColor.clearColor;
+        _activity.backgroundColor = [UIColor colorWithWhite:0 alpha:0.3];
         _activity.clipsToBounds = YES;
         _activity.layer.cornerRadius = 40 / 2;
     }

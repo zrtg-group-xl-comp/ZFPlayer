@@ -128,6 +128,9 @@ typedef NS_ENUM(NSInteger, PanDirection){
 /// 原app是否隐藏状态栏
 @property (nonatomic) BOOL isAppStatusBarHidden;
 @property (nonatomic, strong) VIResourceLoaderManager *resourceLoaderManager;
+/// 高频率监听播放进度Timer,用于修正loading已经消失但视频要卡顿一下再播放的问题
+@property (nonatomic, strong) NSTimer           *checkPlayRangeTimer;
+
 @end
 
 @implementation ZFPlayerView
@@ -193,6 +196,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
 - (void)dealloc {
     self.playerItem = nil;
     self.scrollView  = nil;
+    self.checkPlayRangeTimer = nil;
     ZFPlayerShared.isLockScreen = NO;
     [self.controlView zf_playerCancelAutoFadeOutControlView];
     // 移除通知
@@ -1353,8 +1357,22 @@ typedef NS_ENUM(NSInteger, PanDirection){
  */
 - (void)setState:(ZFPlayerState)state {
     _state = state;
-    // 控制菊花显示、隐藏
-    [self.controlView zf_playerActivity: state == ZFPlayerStateBuffering];
+    // 控制Loading显示、隐藏
+    // 进度开始更新/播放停止 隐藏Loading,其他状态都显示
+    if (state == ZFPlayerStateStarted || state == ZFPlayerStateStopped) {
+        [self.controlView zf_playerActivity: NO];
+    } else {
+        [self.controlView zf_playerActivity: YES];
+    }
+    /// 接收到ZF的Playing状态 开启高频率播放进度监听
+    if (state == ZFPlayerStatePlaying) {
+        if (self.checkPlayRangeTimer != nil) {
+            self.checkPlayRangeTimer = nil;
+        }
+        /// 30ms触发一次, 循环触发,直到检测到播放进度才停止
+        self.checkPlayRangeTimer = [NSTimer scheduledTimerWithTimeInterval:0.03 target:self selector:@selector(checkPlayerTimeRangesChangeTimerAction) userInfo:nil repeats:YES];
+        [self.checkPlayRangeTimer fire];
+    }
     // 处于播放状态
     if (state == ZFPlayerStatePlaying) {
         // 隐藏占位图
@@ -1372,7 +1390,20 @@ typedef NS_ENUM(NSInteger, PanDirection){
         [self.controlView zf_playerItemStatusFailed:error];
     }
 }
-
+/// 检测是否有播放进度产生的Timer回调
+- (void)checkPlayerTimeRangesChangeTimerAction {
+    AVPlayerItem *currentItem = self.playerItem;
+    NSArray *loadedRanges = currentItem.seekableTimeRanges;
+    /// 得到播放进度的毫秒值
+    CGFloat timeMs = currentItem.currentTime.value * 1000.0 / currentItem.currentTime.timescale;
+    if (loadedRanges.count > 0 && timeMs > 0) {
+        NSLog(@"检测到开始播放- %f", timeMs);
+        self.state = ZFPlayerStateStarted;
+        /// 暂停并销毁定时器
+        [self.checkPlayRangeTimer setFireDate:[NSDate distantFuture]];
+        self.checkPlayRangeTimer = nil;
+    }
+}
 /**
  *  设置静音
  *

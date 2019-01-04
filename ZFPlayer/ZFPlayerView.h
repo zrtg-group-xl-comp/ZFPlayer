@@ -47,12 +47,15 @@ typedef NS_ENUM(NSInteger, ZFPlayerLayerGravity) {
 };
 
 // 播放器的几种状态
+/// 新添加的ZFPlayerStateStarted状态为解决loading已经消失但视频要卡顿一下再播放的问题
+/// 目前只修改了loading显示和隐藏的逻辑
 typedef NS_ENUM(NSInteger, ZFPlayerState) {
     ZFPlayerStateFailed,     // 播放失败
     ZFPlayerStateBuffering,  // 缓冲中
     ZFPlayerStatePlaying,    // 播放中
     ZFPlayerStateStopped,    // 停止播放
-    ZFPlayerStatePause       // 暂停播放
+    ZFPlayerStatePause,      // 暂停播放
+    ZFPlayerStateStarted     // 进度开始变化
 };
 
 @interface ZFPlayerView : UIView <ZFPlayerControlViewDelagate>
