@@ -130,6 +130,10 @@ typedef NS_ENUM(NSInteger, PanDirection){
 @property (nonatomic, strong) VIResourceLoaderManager *resourceLoaderManager;
 /// 高频率监听播放进度Timer,用于修正loading已经消失但视频要卡顿一下再播放的问题
 @property (nonatomic, strong) NSTimer           *checkPlayRangeTimer;
+/// 监听播放进度Timer最大监听时间, 默认3秒(接收到开始播放消息后实际产生播放进度的等待时间,最大出现过1.5秒)
+@property(nonatomic) NSUInteger                      checkPlayRangeTimerMaxTimeMs;
+/// 已经查询了多少次
+@property(nonatomic) NSUInteger                      checkPlayRangeTimerTimes;
 
 @end
 
@@ -170,6 +174,8 @@ typedef NS_ENUM(NSInteger, PanDirection){
         [VICacheManager cleanAllCacheWithError:nil];
     }
     self.resourceLoaderManager = [VIResourceLoaderManager new];
+    /// 最大等待时间3秒,如果还没有播放进度的产生就提示错误
+    self.checkPlayRangeTimerMaxTimeMs = 3 * 1000;
 }
 
 - (UIImageView *)placeholderBlurImageView {
@@ -1370,8 +1376,9 @@ typedef NS_ENUM(NSInteger, PanDirection){
             [self.checkPlayRangeTimer invalidate];
             self.checkPlayRangeTimer = nil;
         }
+        self.checkPlayRangeTimerTimes = 0;
         /// 30ms触发一次, 循环触发,直到检测到播放进度才停止
-        self.checkPlayRangeTimer = [NSTimer scheduledTimerWithTimeInterval:0.03 target:self selector:@selector(checkPlayerTimeRangesChangeTimerAction) userInfo:nil repeats:YES];
+        self.checkPlayRangeTimer = [NSTimer scheduledTimerWithTimeInterval:0.03 target:self selector:@selector(checkPlayerTimeRangesChangeTimerAction:) userInfo:nil repeats:YES];
         [self.checkPlayRangeTimer fire];
     }
     // 处于播放状态
@@ -1392,7 +1399,8 @@ typedef NS_ENUM(NSInteger, PanDirection){
     }
 }
 /// 检测是否有播放进度产生的Timer回调
-- (void)checkPlayerTimeRangesChangeTimerAction {
+- (void)checkPlayerTimeRangesChangeTimerAction:(NSTimer*) timer {
+    self.checkPlayRangeTimerTimes ++;
     AVPlayerItem *currentItem = self.playerItem;
     NSArray *loadedRanges = currentItem.seekableTimeRanges;
     /// 得到播放进度的毫秒值
@@ -1401,8 +1409,21 @@ typedef NS_ENUM(NSInteger, PanDirection){
         NSLog(@"检测到开始播放- %f", timeMs);
         self.state = ZFPlayerStateStarted;
         /// 暂停并销毁定时器
-        [self.checkPlayRangeTimer invalidate];
-        self.checkPlayRangeTimer = nil;
+        [timer invalidate];
+        timer = nil;
+    } else {
+        /// 30ms触发一次
+        if (self.checkPlayRangeTimerTimes * 30 >= self.checkPlayRangeTimerMaxTimeMs) {
+            NSLog(@"播放失败- 已经等待时间%lu ms", self.checkPlayRangeTimerTimes * 30);
+            /// 暂停并销毁定时器
+            /// 暂停并销毁定时器
+            [timer invalidate];
+            timer = nil;
+            self.state = ZFPlayerStateFailed;
+            /// 暂停播放
+            [self pause];
+            self.checkPlayRangeTimerTimes = 0;
+        }
     }
 }
 /**
