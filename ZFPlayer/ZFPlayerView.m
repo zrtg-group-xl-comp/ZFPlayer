@@ -1358,8 +1358,8 @@ typedef NS_ENUM(NSInteger, PanDirection){
 - (void)setState:(ZFPlayerState)state {
     _state = state;
     // 控制Loading显示、隐藏
-    // 进度开始更新/播放停止 隐藏Loading,其他状态都显示
-    if (state == ZFPlayerStateStarted || state == ZFPlayerStateStopped) {
+    // 进度开始更新/播放停止/播放错误 隐藏Loading,其他状态都显示
+    if (state == ZFPlayerStateStarted || state == ZFPlayerStateStopped || ZFPlayerStateFailed) {
         [self.controlView zf_playerActivity: NO];
     } else {
         [self.controlView zf_playerActivity: YES];
