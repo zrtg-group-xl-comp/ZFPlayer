@@ -1367,6 +1367,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
     /// 接收到ZF的Playing状态 开启高频率播放进度监听
     if (state == ZFPlayerStatePlaying) {
         if (self.checkPlayRangeTimer != nil) {
+            [self.checkPlayRangeTimer invalidate];
             self.checkPlayRangeTimer = nil;
         }
         /// 30ms触发一次, 循环触发,直到检测到播放进度才停止
@@ -1400,7 +1401,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
         NSLog(@"检测到开始播放- %f", timeMs);
         self.state = ZFPlayerStateStarted;
         /// 暂停并销毁定时器
-        [self.checkPlayRangeTimer setFireDate:[NSDate distantFuture]];
+        [self.checkPlayRangeTimer invalidate];
         self.checkPlayRangeTimer = nil;
     }
 }
