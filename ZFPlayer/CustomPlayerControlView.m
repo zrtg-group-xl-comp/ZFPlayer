@@ -850,7 +850,7 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 - (IndicatorFlowerView *)activity {
     if (!_activity) {
         _activity = [[IndicatorFlowerView alloc] init];
-        _activity.backgroundColor = [UIColor colorWithWhite:0 alpha:0.3];
+        _activity.backgroundColor = [UIColor clearColor];
         _activity.clipsToBounds = YES;
         _activity.layer.cornerRadius = 40 / 2;
     }
@@ -1322,6 +1322,10 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 - (void)uploadLoadingImages:(NSArray*)images {
     self.activity.animationImages = images;
     self.activity.loadingImages = images;
+}
+/// 设置loading背景颜色
+- (void)uploadLoadingBackGroundColor:(UIColor*)color {
+    self.activity.backgroundColor = color;
 }
 /// 隐藏顶部阴影
 - (void)setTopMaskLayerImage:(UIImage*) image {
