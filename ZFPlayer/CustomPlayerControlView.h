@@ -40,5 +40,7 @@
 - (void)setTopMaskLayerImage:(UIImage*) image;
 /// 隐藏底部阴影
 - (void)setBottomMaskLayerImage:(UIImage*) image;
+/// 设置loading背景颜色
+- (void)uploadLoadingBackGroundColor:(UIColor*)color;
 
 @end
