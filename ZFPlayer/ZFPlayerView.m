@@ -1834,5 +1834,8 @@ typedef NS_ENUM(NSInteger, PanDirection){
     BOOL isIPhoneX = [platform isEqualToString:@"iPhone10,3"] || [platform isEqualToString:@"iPhone10,6"] || [platform isEqualToString:@"iPhone11,2"] || [platform isEqualToString:@"iPhone11,6"] || [platform isEqualToString:@"iPhone11,6"] || [platform isEqualToString:@"iPhone11,8"];
     return isIPhoneX;
 }
-
+- (void)removePlayer {
+    [self.playerItem cancelPendingSeeks];
+    [self.playerItem.asset cancelLoading];
+}
 @end
