@@ -138,10 +138,27 @@ static NSString *VIMediaCacheErrorDoamin = @"com.vimediacache";
     }];
     
     if (actions.count == 0) {
-        VICacheAction *action = [VICacheAction new];
-        action.actionType = VICacheAtionTypeRemote;
-        action.range = range;
-        [actions addObject:action];
+        /// 大于1mb就切割成 800kb每次请求
+        NSInteger perPakegeLength = 800 * 1024;
+        if ((range.length - range.location) > 1024 * 1024) {
+            NSInteger package = range.length / perPakegeLength;
+            for (NSInteger i = 0; i <= package; i++) {
+                VICacheAction *action = [VICacheAction new];
+                action.actionType = VICacheAtionTypeRemote;
+
+                NSInteger offset = i * perPakegeLength;
+                NSInteger offsetLocation = range.location + offset;
+                NSInteger maxLocation = range.location + range.length;
+                NSInteger length = (offsetLocation + perPakegeLength) > maxLocation ? (maxLocation - offsetLocation) : perPakegeLength;
+                action.range = NSMakeRange(offsetLocation, length);
+                [actions addObject:action];
+            }
+        } else {
+            VICacheAction *action = [VICacheAction new];
+            action.actionType = VICacheAtionTypeRemote;
+            action.range = range;
+            [actions addObject:action];
+        }
     } else {
         // Add remote fragments
         NSMutableArray *localRemoteActions = [NSMutableArray array];
