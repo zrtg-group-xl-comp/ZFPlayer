@@ -1419,7 +1419,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
             /// 暂停并销毁定时器
             [timer invalidate];
             timer = nil;
-            self.state = ZFPlayerStateFailed;
+          //  self.state = ZFPlayerStateFailed;
             /// 暂停播放
             [self pause];
             self.checkPlayRangeTimerTimes = 0;
