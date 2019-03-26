@@ -1412,18 +1412,18 @@ typedef NS_ENUM(NSInteger, PanDirection){
         [timer invalidate];
         timer = nil;
     } else {
-        /// 30ms触发一次
-        if (self.checkPlayRangeTimerTimes * 30 >= self.checkPlayRangeTimerMaxTimeMs) {
-            NSLog(@"播放失败- 已经等待时间%lu ms", self.checkPlayRangeTimerTimes * 30);
-            /// 暂停并销毁定时器
-            /// 暂停并销毁定时器
-            [timer invalidate];
-            timer = nil;
-            self.state = ZFPlayerStateFailed;
-            /// 暂停播放
-            [self pause];
-            self.checkPlayRangeTimerTimes = 0;
-        }
+//        /// 30ms触发一次
+//        if (self.checkPlayRangeTimerTimes * 30 >= self.checkPlayRangeTimerMaxTimeMs) {
+//            NSLog(@"播放失败- 已经等待时间%lu ms", self.checkPlayRangeTimerTimes * 30);
+//            /// 暂停并销毁定时器
+//            /// 暂停并销毁定时器
+//            [timer invalidate];
+//            timer = nil;
+//            self.state = ZFPlayerStateFailed;
+//            /// 暂停播放
+//            [self pause];
+//            self.checkPlayRangeTimerTimes = 0;
+//        }
     }
 }
 /**
