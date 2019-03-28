@@ -192,7 +192,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
 
 - (UIVisualEffectView *)effectView {
     if (_effectView == nil) {
-        UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+        UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
         _effectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
         _effectView.alpha = 0.8f;
     }
@@ -435,7 +435,8 @@ typedef NS_ENUM(NSInteger, PanDirection){
     // 初始化playerLayer
     self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
     [self.placeholderBlurImageView addSubview:self.effectView];
-    
+    [self insertSubview:self.placeholderBlurImageView atIndex:0];
+
     self.backgroundColor = [UIColor clearColor];
     // 此处为默认视频填充模式
     self.playerLayer.videoGravity = self.videoGravity;
@@ -589,7 +590,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
                 self.state = ZFPlayerStatePlaying;
                 // 添加playerLayer到self.layer
                 [self.layer insertSublayer:self.playerLayer atIndex:0];
-                [self insertSubview:self.placeholderBlurImageView atIndex:0];
+                [self sendSubviewToBack:self.placeholderBlurImageView];
                 // 加载完成后，再添加平移手势
                 if (!self.disablePanGesture) {
                     // 添加平移手势，用来控制音量、亮度、快进快退
@@ -1388,7 +1389,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
         // 如果全屏播放就加载高斯模糊的ImageView
         // 不处理高斯模糊的背景图会导致页面有一个蒙层一闪而过
         if (self.isFullScreen == NO) {
-            self.placeholderBlurImageView.alpha = 0;
+            self.placeholderBlurImageView.alpha = 1;
         } else {
             // 否则隐藏
             self.placeholderBlurImageView.alpha = 1;
