@@ -1612,10 +1612,18 @@ typedef NS_ENUM(NSInteger, PanDirection){
     self.isPauseByUser = !self.isPauseByUser;
     if (self.isPauseByUser) {
         [self pause];
-        if (self.state == ZFPlayerStatePlaying) { self.state = ZFPlayerStatePause;}
+        if (self.state == ZFPlayerStatePlaying) {
+            self.state = ZFPlayerStatePause;
+        } else {
+            self.state = self.state;
+        }
     } else {
         [self play];
-        if (self.state == ZFPlayerStatePause) { self.state = ZFPlayerStatePlaying; }
+        if (self.state == ZFPlayerStatePause) {
+            self.state = ZFPlayerStatePlaying;
+        } else {
+            self.state = self.state;
+        }
     }
     
     if (!self.isAutoPlay) {
