@@ -190,14 +190,14 @@ typedef NS_ENUM(NSInteger, PanDirection){
     return _placeholderBlurImageView;
 }
 
-- (UIVisualEffectView *)effectView {
-    if (_effectView == nil) {
-        UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-        _effectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-        _effectView.alpha = 0.8f;
-    }
-    return _effectView;
-}
+//- (UIVisualEffectView *)effectView {
+//    if (_effectView == nil) {
+//        UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+//        _effectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+//        _effectView.alpha = 0.8f;
+//    }
+//    return _effectView;
+//}
 
 - (void)dealloc {
     self.playerItem = nil;
@@ -434,10 +434,10 @@ typedef NS_ENUM(NSInteger, PanDirection){
     
     // 初始化playerLayer
     self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
-    [self.placeholderBlurImageView addSubview:self.effectView];
+//    [self.placeholderBlurImageView addSubview:self.effectView];
     [self insertSubview:self.placeholderBlurImageView atIndex:0];
 
-    self.backgroundColor = [UIColor clearColor];
+    self.backgroundColor = [UIColor blackColor];
     // 此处为默认视频填充模式
     self.playerLayer.videoGravity = self.videoGravity;
     
